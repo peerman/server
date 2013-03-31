@@ -5,7 +5,9 @@
                 "engine.io": "0.5.x",
                 "express": "3.x",
                 "mongodb": "1.2.x",
-                "qbox": "0.1.x"
+                "qbox": "0.1.x",
+                "winstoon": "0.2.x",
+                "node-uuid": "1.4.x"
         },
         "engines": {
                 "node": "0.8.x",

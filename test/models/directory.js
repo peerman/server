@@ -31,11 +31,10 @@ suite('DirectoryModel', function() {
         function validateMongoState(err, obj) {
 
             assert.ifError(err);
-            assert.deepEqual(obj, {
-                _id: peerId,
-                serverId: serverId,
-                peers: peers
-            });
+            assert.equal(obj._id, peerId);
+            assert.deepEqual(obj.peers, peers);
+            assert.deepEqual(obj.serverId, serverId);
+            assert.ok(obj.rnd);
             done();
         }
     }));
