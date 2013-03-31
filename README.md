@@ -1,4 +1,4 @@
-server
-======
+peerman-server
+==============
 
-Peerman Server
+NodeJS based server for Peerman
