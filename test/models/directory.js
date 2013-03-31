@@ -153,7 +153,9 @@ suite('DirectoryModel', function() {
             _id: 'peer5',
             peers: ['peer4', 'peer3'],
             resources: ['r1', 'r2'],
-            serverId: 's1'
+            serverId: 's1',
+            online: true,
+            stillNeeded: 10
         }, function (err) {
             
             assert.ifError(err);
@@ -175,7 +177,9 @@ suite('DirectoryModel', function() {
             _id: 'peer5',
             peers: ['peer1', 'peer3'],
             resources: ['r1', 'r2'],
-            serverId: 's1'
+            serverId: 's1',
+            online: true,
+            stillNeeded: 10
         }, function (err) {
             
             assert.ifError(err);
@@ -197,7 +201,9 @@ suite('DirectoryModel', function() {
             _id: 'peer5',
             peers: ['peer4', 'peer3'],
             resources: ['r1', 'r2'],
-            serverId: 's1'
+            serverId: 's1',
+            online: true,
+            stillNeeded: 10
         }, function (err) {
             
             assert.ifError(err);
@@ -219,7 +225,9 @@ suite('DirectoryModel', function() {
             _id: 'peer5',
             peers: ['peer4', 'peer3'],
             resources: ['r1', 'r2'],
-            serverId: 's1'
+            serverId: 's1',
+            online: true,
+            stillNeeded: 10
         }, function (err) {
             
             assert.ifError(err);
