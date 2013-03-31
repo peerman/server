@@ -45,7 +45,7 @@ suite('DirectoryModel', function() {
         var peerId = '1313';
         var peers = [];
 
-        coll.insert({_id: peerId, peers: peers}, function(err) {
+        coll.insert({_id: peerId, peers: peers, stillNeeded: 10}, function(err) {
 
             assert.ifError(err);
             var dm = new DirectoryModel(coll);
@@ -62,6 +62,7 @@ suite('DirectoryModel', function() {
             
             assert.ifError(err);
             assert.deepEqual(obj.peers, ['new']);
+            assert.deepEqual(obj.stillNeeded, 9);
             done();
         }
     }));
@@ -71,7 +72,7 @@ suite('DirectoryModel', function() {
         var peerId = '1313';
         var peers = ['some-one'];
 
-        coll.insert({_id: peerId, peers: peers}, function(err) {
+        coll.insert({_id: peerId, peers: peers, stillNeeded: 4}, function(err) {
 
             assert.ifError(err);
             var dm = new DirectoryModel(coll);
@@ -88,6 +89,7 @@ suite('DirectoryModel', function() {
             
             assert.ifError(err);
             assert.deepEqual(obj.peers, []);
+            assert.equal(obj.stillNeeded, 5);
             done();
         }
     }));
