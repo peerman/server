@@ -1,0 +1,12 @@
+{
+	"port": 5005,
+	"mongo": {
+		"url": "mongodb://localhost/peerman",
+		"collections": {
+			"directory": "directory"
+		}
+	},
+	"logger": {
+		"level": "debug"
+	}
+}
