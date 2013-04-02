@@ -9,12 +9,16 @@
                 "winstoon": "0.2.x",
                 "node-uuid": "1.4.x"
         },
+        "devDependencies": {
+                "mocha": "1.x.x"
+        },
         "engines": {
                 "node": "0.8.x",
                 "npm": "1.1.x"
         },
         "scripts": {
-                "start": "server.js"
+                "test": "test/index.js",
+                "start": "server-server.js"
         },
         "private": true,
         "subdomain": "kn-peerman"

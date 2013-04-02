@@ -249,7 +249,7 @@ function _clean(callback) {
 
         $.ready(function() {
 
-            $.db.collection(COLLECTION).drop(afterDropped);
+            $.db.collection(COLLECTION).remove(afterDropped);
         });
 
         function afterDropped(err) {
