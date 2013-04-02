@@ -33,6 +33,7 @@ function afterMongoConnected (err, db) {
     var models = {};
     var collection = db.collection(config.mongo.collections.directory);
     models.directory = require('./lib/models/directory')(collection);
+    models.resource = require('./lib/models/resource')(collection);
 
     //clientManager
     var clientManager = require('./lib/clientManager')(io.sockets, models);
