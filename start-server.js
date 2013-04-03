@@ -31,9 +31,13 @@ function afterMongoConnected (err, db) {
 
     //models
     var models = {};
-    var collection = db.collection(config.mongo.collections.directory);
-    models.directory = require('./lib/models/directory')(collection);
-    models.resource = require('./lib/models/resource')(collection);
+    var directoryCollection = db.collection(config.mongo.collections.directory);
+    var resourceCollection = db.collection(config.mongo.collections.resource);
+    var accessCollection = db.collection(config.mongo.collections.access);
+
+    models.directory = require('./lib/models/directory')(directoryCollection);
+    models.resource = require('./lib/models/resource')(resourceCollection);
+    models.access = require('./lib/models/access')(accessCollection);
 
     //clientManager
     var clientManager = require('./lib/clientManager')(io.sockets, models);

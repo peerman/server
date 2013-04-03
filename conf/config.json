@@ -3,7 +3,9 @@
 	"mongo": {
 		"url": "mongodb://localhost/peerman",
 		"collections": {
-			"directory": "directory"
+			"directory": "directory",
+			"resource": "resource",
+			"access": "access"
 		}
 	},
 	"logger": {
