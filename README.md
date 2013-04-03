@@ -1,4 +1,4 @@
-peerman-server
-==============
+peerman-signaling-server
+========================
 
-NodeJS based server for Peerman
+`socket.io` based signaling-server for Peerman
