@@ -1,5 +1,8 @@
 {
-	"port": 5005,
+	"ports": {
+		"signaling": 5005,
+		"app": 5006
+	},
 	"mongo": {
 		"url": "mongodb://localhost/peerman",
 		"collections": {

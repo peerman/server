@@ -21,8 +21,8 @@ io.set('browser client minification', 1);
 //db and models
 mongo.MongoClient.connect(config.mongo.url, afterMongoConnected);
 
-var port = parseInt(process.argv[2]) || config.port;
-logger.info('starting peerman server', {port: port});
+var port = parseInt(process.argv[2]) || config.ports.signaling;
+logger.info('starting peerman signaling server', {port: port});
 server.listen(port);
 
 function afterMongoConnected (err, db) {

@@ -1,4 +1,9 @@
-peerman-signaling-server
+peerman-server
 ========================
 
-`socket.io` based signaling-server for Peerman
+###NodeJS Peerman Server
+
+Contains
+
+* socket.io based peerman signaling server
+* app server do deal with user-token and login
