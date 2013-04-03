@@ -7,6 +7,7 @@ mocha.reporter('spec').ui('tdd');
  
 mocha.addFile('test/models/directory.js');
 mocha.addFile('test/models/resource.js');
+mocha.addFile('test/models/access.js');
 
 var runner = mocha.run(function(){
   process.exit(0);

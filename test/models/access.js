@@ -61,6 +61,53 @@ suite('AccessModel', function() {
             done();
         }
     }));
+
+    test('.checkLoginToken()', _clean(function(coll, done) {
+
+        var am = new AccessModel(coll);
+        var loginToken = 'sdsd-sdsd';
+        var t;
+        am.createAccessToken(function(err, token) {
+
+            assert.ifError(err);
+            t = token;
+
+            am.setLoginToken(t, loginToken, doValidateState);
+        });
+
+        function doValidateState(err) {
+            
+            assert.ifError(err);
+            am.checkLoginToken(loginToken, validateState);
+        }
+
+        function validateState(err, accessToken) {
+            
+            assert.ifError(err);
+            assert.equal(accessToken, t);
+            done();
+        }
+    }));
+
+    test('.checkLoginToken() - failed', _clean(function(coll, done) {
+
+        var am = new AccessModel(coll);
+        var t;
+        am.createAccessToken(function(err, token) {
+
+            assert.ifError(err);
+            t = token;
+
+            am.checkLoginToken('no-login-token', validateState);
+        });
+
+        function validateState(err, accessToken) {
+            
+            assert.ifError(err);
+            assert.equal(accessToken, null);
+            done();
+        }
+    }));
 });
 
 function _clean(callback) {
