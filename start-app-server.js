@@ -12,6 +12,7 @@ winstoon.setRootLevel(config.logger.level);
 //app
 var app = express();
 app.use(express.cookieParser());
+app.use(express.static(__dirname + '/core', {maxAge: 1000 * 3600 * 24}))
 
 //db and models
 mongo.MongoClient.connect(config.mongo.url, afterMongoConnected);
