@@ -2,7 +2,7 @@
         "name": "peerman-server",
         "version": "0.0.1",
         "dependencies": {
-                "engine.io": "0.5.x",
+                "socket.io": "0.9.x",
                 "express": "3.x",
                 "mongodb": "1.2.x",
                 "qbox": "0.1.x",
