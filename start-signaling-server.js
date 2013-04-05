@@ -11,6 +11,10 @@ var logger          = winstoon.createLogger('/');
 winstoon.add(winstoon.transports.Console);
 winstoon.setRootLevel(config.logger.level);
 
+//metrics support
+var metrics = require('./lib/metrics');
+metrics.startTracking(config['metrics'], 'signaling', '');
+
 //app
 var app = express();
 var server = http.createServer(app);

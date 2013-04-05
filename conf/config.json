@@ -3,6 +3,7 @@
 		"signaling": 5005,
 		"app": 5006
 	},
+
 	"mongo": {
 		"url": "mongodb://localhost/peerman",
 		"collections": {
@@ -11,7 +12,16 @@
 			"access": "access"
 		}
 	},
+
 	"logger": {
 		"level": "debug"
-	}
+	},
+
+	"metrics": {
+
+        "interval": 2000,
+        "minum": {
+            "url": "mongodb://localhost/metrics"
+        }
+    }
 }

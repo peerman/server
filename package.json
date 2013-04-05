@@ -7,7 +7,9 @@
                 "mongodb": "1.2.x",
                 "qbox": "0.1.x",
                 "winstoon": "0.2.x",
-                "node-uuid": "1.4.x"
+                "node-uuid": "1.4.x",
+                "minum": "0.1.x",
+                "usage": "0.3.x"
         },
         "devDependencies": {
                 "mocha": "1.x.x"
