@@ -20,18 +20,20 @@ suite('DirectoryModel', function() {
         var serverId = 'sdsds';
         var peers = ['ssd', 's4d'];
         var peerId = '2323';
+        var resource = 'resource';
 
         var dm = new DirectoryModel(coll);
-        dm.save(peerId, { serverId: serverId, peers: peers}, function(err) {
+        dm.save(peerId, resource, { serverId: serverId, peers: peers}, function(err) {
 
             assert.ifError(err);
-            coll.findOne({_id: peerId}, validateMongoState);
+            coll.findOne({id: peerId, resource: resource}, validateMongoState);
         });
 
         function validateMongoState(err, obj) {
 
             assert.ifError(err);
-            assert.equal(obj._id, peerId);
+            assert.equal(obj.id, peerId);
+            assert.equal(obj.resource, resource);
             assert.deepEqual(obj.peers, peers);
             assert.deepEqual(obj.serverId, serverId);
             assert.ok(obj.rnd);
@@ -39,22 +41,52 @@ suite('DirectoryModel', function() {
         }
     }));
 
+    test('.save() - multi (resource as null)', _clean(function(coll, done) {
+
+        var peerId = '2323';
+
+        var dm = new DirectoryModel(coll);
+        dm.save(peerId, 'r1', { online: true }, function(err) {
+
+            dm.save(peerId, 'r2', { online: true }, afterSavedAll);
+        });
+
+        function afterSavedAll(err) {
+            
+            dm.save(peerId, null, { online: false }, doValidateMongoState);
+        }
+
+        function doValidateMongoState(err) {
+            
+            assert.ifError(err);
+            coll.find({ id: peerId, online: false }).toArray(validateMongoState);
+        }
+
+        function validateMongoState(err, peers) {
+
+            assert.ifError(err);
+            assert.equal(peers.length, peers.length);
+            done();
+        }
+    }));
+
     test('.addPeer()', _clean(function(coll, done) {
 
         var peerId = '1313';
+        var resource = 'resource1';
         var peers = [];
 
-        coll.insert({_id: peerId, peers: peers, stillNeeded: 10}, function(err) {
+        coll.insert({id: peerId, resource: resource, peers: peers, stillNeeded: 10}, function(err) {
 
             assert.ifError(err);
             var dm = new DirectoryModel(coll);
-            dm.addPeer(peerId, 'new', doValidateState);
+            dm.addPeer(peerId, resource, 'new', doValidateState);
         });
 
         function doValidateState (err) {
             
             assert.ifError(err);
-            coll.findOne({_id: peerId}, validateState);
+            coll.findOne({id: peerId, resource: resource}, validateState);
         }
 
         function validateState (err, obj) {
@@ -70,18 +102,19 @@ suite('DirectoryModel', function() {
 
         var peerId = '1313';
         var peers = ['some-one'];
+        var resource = 'resource1';
 
-        coll.insert({_id: peerId, peers: peers, stillNeeded: 4}, function(err) {
+        coll.insert({id: peerId, resource: resource, peers: peers, stillNeeded: 4}, function(err) {
 
             assert.ifError(err);
             var dm = new DirectoryModel(coll);
-            dm.removePeer(peerId, 'some-one', doValidateState);
+            dm.removePeer(peerId, resource, 'some-one', doValidateState);
         });
 
         function doValidateState (err) {
             
             assert.ifError(err);
-            coll.findOne({_id: peerId}, validateState);
+            coll.findOne({id: peerId, resource: resource}, validateState);
         }
 
         function validateState (err, obj) {
@@ -93,65 +126,13 @@ suite('DirectoryModel', function() {
         }
     }));
 
-    test('.addResource()', _clean(function(coll, done) {
-
-        var peerId = '1313';
-        var resources = [];
-
-        coll.insert({_id: peerId, resources: resources}, function(err) {
-
-            assert.ifError(err);
-            var dm = new DirectoryModel(coll);
-            dm.addResource(peerId, 'new', doValidateState);
-        });
-
-        function doValidateState (err) {
-            
-            assert.ifError(err);
-            coll.findOne({_id: peerId}, validateState);
-        }
-
-        function validateState (err, obj) {
-            
-            assert.ifError(err);
-            assert.deepEqual(obj.resources, ['new']);
-            done();
-        }
-    }));
-
-    test('.removeResource()', _clean(function(coll, done) {
-
-        var peerId = '1313';
-        var resources = ['some-thing'];
-
-        coll.insert({_id: peerId, resources: resources}, function(err) {
-
-            assert.ifError(err);
-            var dm = new DirectoryModel(coll);
-            dm.removeResource(peerId, 'some-thing', doValidateState);
-        });
-
-        function doValidateState (err) {
-            
-            assert.ifError(err);
-            coll.findOne({_id: peerId}, validateState);
-        }
-
-        function validateState (err, obj) {
-            
-            assert.ifError(err);
-            assert.deepEqual(obj.resources, []);
-            done();
-        }
-    }));
-
     test('.findPeersFor() - correctly find', _clean(function(coll, done) {
 
         var dm = new DirectoryModel(coll);
         coll.insert({
-            _id: 'peer5',
+            id: 'peer5',
             peers: ['peer4', 'peer3'],
-            resources: ['r1', 'r2'],
+            resource: 'r1',
             serverId: 's1',
             online: true,
             stillNeeded: 10
@@ -173,9 +154,9 @@ suite('DirectoryModel', function() {
 
         var dm = new DirectoryModel(coll);
         coll.insert({
-            _id: 'peer5',
+            id: 'peer5',
             peers: ['peer1', 'peer3'],
-            resources: ['r1', 'r2'],
+            resources: 'r1',
             serverId: 's1',
             online: true,
             stillNeeded: 10
@@ -197,9 +178,9 @@ suite('DirectoryModel', function() {
 
         var dm = new DirectoryModel(coll);
         coll.insert({
-            _id: 'peer5',
+            id: 'peer5',
             peers: ['peer4', 'peer3'],
-            resources: ['r1', 'r2'],
+            resources: 'r1',
             serverId: 's1',
             online: true,
             stillNeeded: 10
@@ -221,9 +202,9 @@ suite('DirectoryModel', function() {
 
         var dm = new DirectoryModel(coll);
         coll.insert({
-            _id: 'peer5',
+            id: 'peer5',
             peers: ['peer4', 'peer3'],
-            resources: ['r1', 'r2'],
+            resources: 'r1',
             serverId: 's1',
             online: true,
             stillNeeded: 10
