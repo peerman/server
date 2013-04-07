@@ -4,6 +4,7 @@ var http            = require('http');
 var express         = require('express');
 var mongo           = require('mongodb');
 var socketIo        = require('socket.io');
+var uuid            = require('node-uuid');
 
 // better logging
 var winstoon        = require('winstoon');
@@ -12,8 +13,10 @@ winstoon.add(winstoon.transports.Console);
 winstoon.setRootLevel(config.logger.level);
 
 //metrics support
+var instanceName = uuid.v4();
 var metrics = require('./lib/metrics');
-metrics.startTracking(config['metrics'], 'signaling', '');
+metrics.startTracking(config['metrics'], 'signaling', instanceName);
+metrics.trackSystemMetrics();
 
 //app
 var app = express();

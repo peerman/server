@@ -2,6 +2,7 @@
 var config          = require('./conf/config.json');
 var express         = require('express');
 var mongo           = require('mongodb');
+var uuid 			= require('node-uuid');
 
 // better logging
 var winstoon        = require('winstoon');
@@ -12,7 +13,13 @@ winstoon.setRootLevel(config.logger.level);
 //app
 var app = express();
 app.use(express.cookieParser());
-app.use(express.static(__dirname + '/core', {maxAge: 1000 * 3600 * 24}))
+app.use(express.static(__dirname + '/core', {maxAge: 1000 * 3600 * 24}));
+
+//metrics support
+var instanceName = uuid.v4();
+var metrics = require('./lib/metrics');
+metrics.startTracking(config['metrics'], 'app', instanceName);
+metrics.trackSystemMetrics();
 
 //db and models
 mongo.MongoClient.connect(config.mongo.url, afterMongoConnected);
