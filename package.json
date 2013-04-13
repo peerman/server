@@ -20,7 +20,7 @@
                 "npm": "1.1.x"
         },
         "scripts": {
-                "test": "test/index.js",
+                "test": "mocha -u tdd -R spec --recursive",
                 "start": "server-server.js"
         },
         "private": true,
