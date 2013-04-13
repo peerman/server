@@ -60,7 +60,7 @@ suite('UserModel', function() {
 
         function afterCreatedLater(err) {
             
-            assert.equal(err.code, 'USER_EXISTS');
+            assert.equal(err.message, 'USER_EXISTS');
             done();
         }
     }));

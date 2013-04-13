@@ -13,7 +13,10 @@ winstoon.setRootLevel(config.logger.level);
 //app
 var app = express();
 app.use(express.cookieParser());
+app.use(express.bodyParser());
 app.use(express.static(__dirname + '/core', {maxAge: 1000 * 3600 * 24}));
+app.use(express.static(__dirname + '/public', {maxAge: 1000 * 3600 * 24}));
+app.engine('html', require('ejs').renderFile);
 
 //metrics support
 var instanceName = uuid.v4();
@@ -35,8 +38,10 @@ function afterMongoConnected (err, db) {
     //models
     var models = {};
     var accessCollection = db.collection(config.mongo.collections.access);
+    var userCollection = db.collection(config.mongo.collections.user);
 
     models.access = require('./lib/models/access')(accessCollection);
+    models.user = require('./lib/models/user')(userCollection);
 
     //load routes
     require('./lib/routes')(app, models);

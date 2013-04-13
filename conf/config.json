@@ -9,7 +9,8 @@
 		"collections": {
 			"directory": "directory",
 			"resource": "resource",
-			"access": "access"
+			"access": "access",
+			"user": "user"
 		}
 	},
 
