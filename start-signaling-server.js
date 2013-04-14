@@ -15,7 +15,7 @@ winstoon.setRootLevel(config.logger.level);
 //metrics support
 var instanceName = uuid.v4();
 var metrics = require('./lib/metrics');
-if(process.NODE_ENV == 'production') {
+if(process.env.NODE_ENV == 'production') {
     metrics.startTracking(config['metrics'], 'signaling', instanceName);
     metrics.trackSystemMetrics();
 }

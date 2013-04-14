@@ -2,7 +2,7 @@
 var config          = require('./conf/config.json');
 var express         = require('express');
 var mongo           = require('mongodb');
-var uuid 			= require('node-uuid');
+var uuid            = require('node-uuid');
 
 // better logging
 var winstoon        = require('winstoon');
@@ -21,8 +21,10 @@ app.engine('html', require('ejs').renderFile);
 //metrics support
 var instanceName = uuid.v4();
 var metrics = require('./lib/metrics');
-metrics.startTracking(config['metrics'], 'app', instanceName);
-metrics.trackSystemMetrics();
+if(process.env.NODE_ENV == 'production') {
+    metrics.startTracking(config['metrics'], 'app', instanceName);
+    metrics.trackSystemMetrics();
+}
 
 //db and models
 mongo.MongoClient.connect(config.mongo.url, afterMongoConnected);

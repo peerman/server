@@ -151,6 +151,42 @@ suite('ResourceModel', function() {
             done();
         }
     }));
+
+    test('.isOwner() - success', _clean(function(coll, done) {
+
+        var id = 'sdsdsdw';
+        var owner = 'kamal';
+
+        var rm = new ResourceModel(coll);
+        rm.create(id, owner, null, function(err) {
+
+            assert.ifError(err);
+            rm.isOwner(id, owner, validateResult);
+        });
+
+        function validateResult(err, isOwner) {
+
+            assert.ifError(err);
+            assert.equal(isOwner, true);
+            done();
+        }
+    }));
+
+    test('.isOwner() - failed', _clean(function(coll, done) {
+
+        var id = 'sdsdsdw';
+        var owner = 'kamal';
+
+        var rm = new ResourceModel(coll);
+        rm.isOwner(id, owner, validateResult);
+
+        function validateResult(err, isOwner) {
+
+            assert.ifError(err);
+            assert.equal(isOwner, false);
+            done();
+        }
+    }));
 });
 
 function _clean(callback) {
