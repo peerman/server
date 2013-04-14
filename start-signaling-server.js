@@ -15,8 +15,10 @@ winstoon.setRootLevel(config.logger.level);
 //metrics support
 var instanceName = uuid.v4();
 var metrics = require('./lib/metrics');
-metrics.startTracking(config['metrics'], 'signaling', instanceName);
-metrics.trackSystemMetrics();
+if(process.NODE_ENV == 'production') {
+    metrics.startTracking(config['metrics'], 'signaling', instanceName);
+    metrics.trackSystemMetrics();
+}
 
 //app
 var app = express();
@@ -40,11 +42,11 @@ function afterMongoConnected (err, db) {
     var models = {};
     var directoryCollection = db.collection(config.mongo.collections.directory);
     var resourceCollection = db.collection(config.mongo.collections.resource);
-    var accessCollection = db.collection(config.mongo.collections.access);
+    var userCollection = db.collection(config.mongo.collections.user);
 
     models.directory = require('./lib/models/directory')(directoryCollection);
     models.resource = require('./lib/models/resource')(resourceCollection);
-    models.access = require('./lib/models/access')(accessCollection);
+    models.user = require('./lib/models/user')(userCollection);
 
     //clientManager
     var clientManager = require('./lib/clientManager')(io.sockets, models);

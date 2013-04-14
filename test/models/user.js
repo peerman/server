@@ -88,6 +88,50 @@ suite('UserModel', function() {
             done();
         }
     }));
+
+    test('.checkLoginToken() - validated', _clean(function(coll, done) {
+
+        var token = 'token-here';
+        var um = new UserModel(coll);
+        var user = 'user-here';
+        um.create(user, 'pass', {}, function(err) {
+
+            assert.ifError(err);
+            um.setLoginToken(user, token, afterTokenSet);
+        });
+
+        function afterTokenSet(err) {
+
+            assert.ifError(err);
+            um.checkLoginToken(token, afterUserGot)
+        }
+
+        function afterUserGot(err, u) {
+
+            assert.ifError(err);
+            assert.equal(u, user);
+            done();
+        }
+    }));
+
+    test('.checkLoginToken() - not-validated', _clean(function(coll, done) {
+
+        var token = 'token-here';
+        var um = new UserModel(coll);
+        var user = 'user-here';
+        um.create(user, 'pass', {}, function(err) {
+
+            assert.ifError(err);
+            um.checkLoginToken(token, afterUserGot)
+        });
+
+        function afterUserGot(err, u) {
+
+            assert.ifError(err);
+            assert.equal(u, null);
+            done();
+        }
+    }));
 });
 
 function _clean(callback) {
