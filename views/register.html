@@ -9,13 +9,10 @@
   </head>
 
   <body>
-    <div class="container">
-      <div class="demo-headline">
-        
-          <div class="login-screen login-background">
+    <div class="">
               
             <% if(typeof(error) != 'undefined') { %>
-            <div class='alert alert-error'><%=error %></div>
+            <div class='alert alert-error alert-top'><%=error %></div>
             <% } %>
             <form method= "post" action = "/doRegister">
               <div class="login-form">
@@ -34,13 +31,10 @@
                 </div>
 
                 <input type='submit' class="btn btn-primary btn-large btn-block" value='Register' />
-                <a class="login-link" href="/login.html">Alreday have an account ? Log in here</a>
+                <a class="login-link" href="/login">Alreday have an account ? Log in here</a>
               </div>
 
             </form>
-          </div>
-       
-      </div>
     </div>
   </body>
 

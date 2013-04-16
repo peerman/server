@@ -5,21 +5,17 @@
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/flat-ui.css">
     <link rel="stylesheet" type="text/css" href="css/my_css.css">
-
   </head>
 
   <body>
-    <div class="container">
-      <div class="demo-headline">
-        
-          <div class="login-screen login-background">
+    <div class="">
            
             <% if(typeof(error) != 'undefined') { %>
-            <div class='alert alert-error'><%=error %></div>
+            <div class='alert alert-error alert-top'><%=error %></div>
             <% } %>
 
             <% if(typeof(message) != 'undefined') { %>
-            <div class='alert alert-success'><%=message %></div>
+            <div class='alert alert-success alert-top'><%=message %></div>
             <% } %>
             <form method = "post" action ="/doLogin">
               <div class="login-form">
@@ -38,9 +34,7 @@
               </div>
 
             </form>
-          </div>
        
-      </div>
     </div>
   </body>
 
